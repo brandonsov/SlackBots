@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
 from app import app
+import events
 
 if __name__ == "__main__":
     load_dotenv()
