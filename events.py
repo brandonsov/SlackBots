@@ -1,6 +1,7 @@
+import os
 import random
-from app import app
 
+from app import app
 from logger import logging
 
 ABDUL_USER_ID = "U0291SC0HLN"
@@ -33,5 +34,6 @@ def react_to_message(body, say, ack, client):
         reaction_name = "triggered_parrot"
     else:
         reaction_name = random.choice(list(reactions.values()))
-    client.reactions_add(channel=channel_id,
-                         name=reaction_name, timestamp=event_ts)
+    chance = random.randint(0, 100)
+    if chance / 100 < float(os.environ["EMOJI_FREQUENCY"]):
+        client.reactions_add(channel=channel_id, name=reaction_name, timestamp=event_ts)
