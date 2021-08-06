@@ -1,15 +1,34 @@
 import os
 import random
 
+import requests
+
 from app import app
+from leetcode import get_random_leetcode_question
 from logger import logging
 
 ABDUL_USER_ID = "U0291SC0HLN"
+LEETCODE_BASE_URL = "https://leetcode.com"
+LEETCODE_API_ROUTE = "api/problems/all"
+LEETCODE_DIFFICULTY = {1: "Easy", 2: "Medium", 3: "Hard"}
 
 
 @app.event("app_mention")
 def event_test(say):
     say("Hi there!")
+
+
+@app.command("/leetcode")
+def get_leetcode_question(ack, body, logger, say, command):
+    ack()
+
+    if question := get_random_leetcode_question():
+        say(
+            f"Name: {question.name}\n"
+            f"Difficulty: {question.difficulty()}\n"
+            f"Link: {question.url()}")
+    else:
+        say("Unable to get Leetcode Question")
 
 
 @app.event("message")
