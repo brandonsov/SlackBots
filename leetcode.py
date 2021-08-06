@@ -13,13 +13,10 @@ class LeetcodeQuestion():
     def __init__(self, name, question_title_slug, difficulty):
         self.name = name
         self.question_title_slug = question_title_slug
-        self.difficulty = difficulty
+        self.difficulty = LEETCODE_DIFFICULTY[difficulty]
 
     def url(self):
         return f"{LEETCODE_BASE_URL}/problems/{self.question_title_slug}/"
-
-    def difficulty(self):
-        return LEETCODE_DIFFICULTY[self.difficulty]
 
 
 def get_random_leetcode_question():
@@ -36,8 +33,5 @@ def get_random_leetcode_question():
     return LeetcodeQuestion(
         question["stat"]["question__title"],
         question["stat"]["question__title_slug"],
-        question["difficulty"]
+        question["difficulty"]["level"]
     )
-
-
-get_random_leetcode_question()

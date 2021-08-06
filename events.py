@@ -19,13 +19,13 @@ def event_test(say):
 
 
 @app.command("/leetcode")
-def get_leetcode_question(ack, body, logger, say, command):
+def get_leetcode_question(ack, say):
     ack()
 
     if question := get_random_leetcode_question():
         say(
             f"Name: {question.name}\n"
-            f"Difficulty: {question.difficulty()}\n"
+            f"Difficulty: {question.difficulty}\n"
             f"Link: {question.url()}")
     else:
         say("Unable to get Leetcode Question")
