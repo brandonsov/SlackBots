@@ -25,10 +25,11 @@ def react_to_message(body, say, ack, client):
                  in client.emoji_list()["emoji"].items()}
     text = body["event"]["text"]
     for word in text.split():
-        if word.lower() in reactions:
+        cand = word.lower().strip(":")
+        if cand in reactions:
             client.reactions_add(
-                channel=channel_id, name=reactions[word.lower()], timestamp=event_ts)
-            reactions.pop(word.lower())
+                channel=channel_id, name=reactions[cand], timestamp=event_ts)
+            reactions.pop(cand)
 
     if user_id == ABDUL_USER_ID:
         reaction_name = "triggered_parrot"
@@ -36,4 +37,5 @@ def react_to_message(body, say, ack, client):
         reaction_name = random.choice(list(reactions.values()))
     chance = random.randint(0, 100)
     if chance / 100 < float(os.environ["EMOJI_FREQUENCY"]):
-        client.reactions_add(channel=channel_id, name=reaction_name, timestamp=event_ts)
+        client.reactions_add(channel=channel_id,
+                             name=reaction_name, timestamp=event_ts)
